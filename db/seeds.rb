@@ -38,12 +38,12 @@ def fetch_data
     if platform && genre
       Game.create(
         game_name:          data[appid]["data"]["name"],
-        steam_appid:        data[appid]["data"]["steam_appid"],
-        required_age:       data[appid]["data"]["required_age"],
-        short_description:  data[appid]["data"]["short_description"],
+        # stean_appid:        appid.to_i,
+        rating:             data[appid]["data"]["required_age"],
+        description:  data[appid]["data"]["short_description"],
         price:              data[appid]&.dig("data", "price_overview", "initial") || 0,
-        platforms:          platform,
-        genres:             genre,
+        # platform:          platform,
+        # genre:             genre,
         release_date:       data[appid]["data"]["release_date"]["date"]
       )
     end
