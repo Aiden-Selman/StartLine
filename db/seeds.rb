@@ -1,7 +1,15 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+AdminUser.delete_all
+Game.delete_all
+Platform.delete_all
+Genre.delete_all
+
+NUMBER_OF_GAMES = 100
+
+Platform.create(platform_name: "PC")
+Platform.create(platform_name: "Playstation")
+Platform.create(platform_name: "Xbox")
+Platform.create(platform_name: "Nintendo")
+
+
+
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
