@@ -16,6 +16,7 @@ Genre.delete_all
 def fetch_data
   games_list = JSON.parse(File.read("db/steamgames.json"))
 
+  # Iterates through the games list and prints out the data of the last NUMBER_OF_GAMES items.
   games_list["applist"]["apps"].last(NUMBER_OF_GAMES).each do |game|
     appid = game["appid"].to_s
     fetch = RestClient.get("https://store.steampowered.com/api/appdetails?appids=#{appid}")
@@ -30,6 +31,22 @@ def fetch_data
     puts "Genres: #{data[appid]['data']['genres'].map { |genre| genre['description'] }.join(', ')}"
     puts "Release Date: #{data[appid]['data']['release_date']['date']}"
     puts "----------------------------------------"
+
+    platform = Platform.find_or_create_by(platform_name: data[appid]["data"]["platforms"].map { |platform| platform[0] }.join(", "))
+    genre = Genre.find_or_create_by(genre_name: data[appid]["data"]["genres"].map { |genre| genre["description"] }.join(", "))
+
+    if platform && genre
+      Game.create(
+        game_name:          data[appid]["data"]["name"],
+        steam_appid:        data[appid]["data"]["steam_appid"],
+        required_age:       data[appid]["data"]["required_age"],
+        short_description:  data[appid]["data"]["short_description"],
+        price:              data[appid]&.dig("data", "price_overview", "initial") || 0,
+        platforms:          platform,
+        genres:             genre,
+        release_date:       data[appid]["data"]["release_date"]["date"]
+      )
+    end
   end
 end
 fetch_data
