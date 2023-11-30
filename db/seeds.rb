@@ -1,6 +1,6 @@
 require 'rest-client'
 
-NUMBER_OF_GAMES = 2
+NUMBER_OF_GAMES = 10
 
 AdminUser.delete_all
 Game.delete_all
@@ -17,41 +17,51 @@ Genre.delete_all
 # Fetches the data from the API.
 def fetch_data
   games_list = JSON.parse(File.read("db/steamgames.json"))
+  fetched_games = 0
 
-  # Iterates through the games list and prints out the data of the last NUMBER_OF_GAMES items.
-  games_list["applist"]["apps"].last(NUMBER_OF_GAMES).each do |game|
+  games_list["applist"]["apps"].each do |game|
     appid = game["appid"].to_s
     fetch = RestClient.get("https://store.steampowered.com/api/appdetails?appids=#{appid}")
     data = JSON.parse(fetch)
+
+    # Gets the price of the game. If the price is nil, it will be set to 0.
+    price = data.dig(appid, "data", "price_overview", "final") || 0
+
+    # Skips the rest of the loop if the price is 0.
+    next if price.zero?
 
     puts "Game Name: #{data[appid]['data']['name']}"
     puts "Steam App ID: #{data[appid]['data']['steam_appid']}"
     puts "Required Age: #{data[appid]['data']['required_age']}"
     puts "Short Description: #{data[appid]['data']['short_description']}"
-    puts "Price: #{data[appid]&.dig('data', 'price_overview', 'initial') || 0}"
-    puts "Platforms: #{data[appid]['data']['platforms'].map { |platform| platform[0] }.join(', ')}"
-    puts "Genres: #{data[appid]['data']['genres'].map { |genre| genre['description'] }.join(', ')}"
+    # puts "Price: #{data[appid]&.dig('data', 'price_overview', 'final') || 0}"
+    puts "Price: #{price}"
+    puts "Platforms: #{data[appid]['data']['platforms']&.map { |platform| platform[0] }&.join(', ') || ""}"
+    puts "Genres: #{data[appid]['data']['genres']&.map { |genre| genre['description'] }&.join(', ') || ""}"
     puts "Release Date: #{data[appid]['data']['release_date']['date']}"
     puts "----------------------------------------"
 
-    platform = Platform.find_or_create_by(platform_name: data[appid]["data"]["platforms"].map { |platform| platform[0] }.join(", "))
-    genre = Genre.find_or_create_by(genre_name: data[appid]["data"]["genres"].map { |genre| genre["description"] }.join(", "))
+    platform = Platform.find_or_create_by(platform_name: data[appid]["data"]["platforms"]&.map { |platform| platform[0] }&.join(", ") || "")
+    genre = Genre.find_or_create_by(genre_name: data[appid]["data"]["genres"]&.map { |genre| genre["description"] }&.join(", ") || "")
 
-    puts data[appid]['data']
-    exit
+    # if platform && genre
+    #   Game.create(
+    #     game_name:          data[appid]["data"]["name"],
+    #     # stean_appid:        appid.to_int,
+    #     rating:             data[appid]["data"]["required_age"],
+    #     description:        data[appid]["data"]["short_description"],
+    #     price:              data[appid]&.dig("data", "price_overview", "final") || 0,
+    #     platform_id:        platform.id,
+    #     genre_id:           genre.id,
+    #     release_date:       data[appid]["data"]["release_date"]["date"],
+    #   )
+    # end
 
-    if platform && genre
-      Game.create(
-        game_name:          data[appid]["data"]["name"],
-        # stean_appid:        appid.to_int,
-        rating:             data[appid]["data"]["required_age"],
-        description:        data[appid]["data"]["short_description"],
-        price:              data[appid]&.dig("data", "price_overview", "final") || 0,
-        platform_id:        platform.id,
-        genre_id:           genre.id,
-        release_date:       data[appid]["data"]["release_date"]["date"],
-      )
-    end
+    # Exits the loop if the number of fetched games is equal to the NUMBER_OF_GAMES
+    fetched_games += 1
+    puts "Fetched Games: #{fetched_games}"
+    puts "----------------------------------------"
+    break if fetched_games >= NUMBER_OF_GAMES
   end
 end
 fetch_data
