@@ -30,6 +30,21 @@ def fetch_data
     # Skips the rest of the loop if the price is 0.
     next if price.zero?
 
+    rating = ""
+    if data[appid]['data']['reqired_age'] < 10
+      rating = "E for everyone"
+    elsif data[appid]['data']['reqired_age'] >= 10 && data[appid]['data']['reqired_age'] < 13
+      rating = "E for everyone 10 and up"
+    elsif data[appid]['data']['reqired_age'] >= 13 && data[appid]['data']['reqired_age'] < 17
+      rating = "T for Teen"
+    elsif data[appid]['data']['reqired_age'] >= 17 && data[appid]['data']['reqired_age'] < 18
+      rating = "M for Mature"
+    elsif data[appid]['data']['reqired_age'] >= 18
+      rating = "AO for Adults Only"
+    else
+      rating = "RP for Rating Pending"
+    end
+
     puts "Game Name: #{data[appid]['data']['name']}"
     puts "Steam App ID: #{data[appid]['data']['steam_appid']}"
     puts "Required Age: #{data[appid]['data']['required_age']}"
@@ -44,18 +59,20 @@ def fetch_data
     platform = Platform.find_or_create_by(platform_name: data[appid]["data"]["platforms"]&.map { |platform| platform[0] }&.join(", ") || "")
     genre = Genre.find_or_create_by(genre_name: data[appid]["data"]["genres"]&.map { |genre| genre["description"] }&.join(", ") || "")
 
-    # if platform && genre
-    #   Game.create(
-    #     game_name:          data[appid]["data"]["name"],
-    #     # stean_appid:        appid.to_int,
-    #     rating:             data[appid]["data"]["required_age"],
-    #     description:        data[appid]["data"]["short_description"],
-    #     price:              data[appid]&.dig("data", "price_overview", "final") || 0,
-    #     platform_id:        platform.id,
-    #     genre_id:           genre.id,
-    #     release_date:       data[appid]["data"]["release_date"]["date"],
-    #   )
-    # end
+
+
+    if platform && genre
+      Game.create(
+        game_name:          data[appid]["data"]["name"],
+        # stean_appid:        appid.to_int,
+        rating:             rating,
+        description:        data[appid]["data"]["short_description"],
+        price:              data[appid]&.dig("data", "price_overview", "final") || 0,
+        platform_id:        platform.id,
+        genre_id:           genre.id,
+        release_date:       data[appid]["data"]["release_date"]["date"],
+      )
+    end
 
     # Exits the loop if the number of fetched games is equal to the NUMBER_OF_GAMES
     fetched_games += 1
