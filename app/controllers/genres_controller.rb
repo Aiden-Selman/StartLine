@@ -5,5 +5,6 @@ class GenresController < ApplicationController
 
   def show
     @genre = Genre.find(params[:id])
+    @games = Game.where(:genre_id == @genre.id)
   end
 end

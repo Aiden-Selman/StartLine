@@ -1,1 +1,6 @@
 <h1><%= @genre.genre_name %></h1>
+  <% @games.each do |game| %>
+    <li>
+      <%= link_to game.game_name, game %>
+    </li>
+  <% end %>
