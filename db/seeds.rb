@@ -5,7 +5,7 @@ Game.delete_all
 Platform.delete_all
 Genre.delete_all
 
-NUMBER_OF_GAMES = 10
+NUMBER_OF_GAMES = 100
 GAMES_LIST = JSON.parse(File.read("db/steamgames.json"))
 
 # Fetches the data from the API.
@@ -78,6 +78,6 @@ def fetch_data
     break if fetched_games >= NUMBER_OF_GAMES
   end
 end
-fetch_data
 
 AdminUser.create!(email: "admin@example.com", password: "password", password_confirmation: "password") if Rails.env.development?
+fetch_data
