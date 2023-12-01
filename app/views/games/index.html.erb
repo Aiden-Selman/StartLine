@@ -2,7 +2,7 @@
 <ul>
   <% @games.each do |game| %>
     <li>
-      <%= game.game_name%>
+      <%= link_to game.game_name, game %>
     </li>
   <% end %>
 </ul>

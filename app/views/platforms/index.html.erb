@@ -2,7 +2,7 @@
 <ul>
   <% @platforms.each do |platform| %>
     <li>
-      <%= platform.platform_name%>
+      <%= link_to platform.platform_name, platform%>
     </li>
   <% end %>
 </ul>
