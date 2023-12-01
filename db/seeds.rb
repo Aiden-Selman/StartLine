@@ -4,6 +4,8 @@ AdminUser.delete_all
 Game.delete_all
 Platform.delete_all
 Genre.delete_all
+About.delete_all
+Contact.delete_all
 
 NUMBER_OF_GAMES = 100
 GAMES_LIST = JSON.parse(File.read("db/steamgames.json"))
@@ -80,4 +82,6 @@ def fetch_data
 end
 
 AdminUser.create!(email: "admin@example.com", password: "password", password_confirmation: "password") if Rails.env.development?
+About.create(content: "Here is a little bit about us!")
+Contact.create(content: "Here is how you can reach us!")
 fetch_data

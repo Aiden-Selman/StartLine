@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   resources :games
   resources :genres
   resources :platforms
+  # resources :abouts
+  # resources :contact
+  get 'about/index'
+  get 'contact/index'
   # get 'platforms/index'
   # get 'platforms/show'
   # get 'genres/index'
