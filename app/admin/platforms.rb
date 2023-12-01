@@ -5,7 +5,7 @@ ActiveAdmin.register Platform do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :platform_name
+  permit_params :platform_name
   #
   # or
   #
@@ -14,5 +14,5 @@ ActiveAdmin.register Platform do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  
+
 end

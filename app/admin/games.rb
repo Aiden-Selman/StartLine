@@ -5,7 +5,7 @@ ActiveAdmin.register Game do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :platform_id, :genre_id, :game_name, :rating, :release_date, :price, :description
+  permit_params :platform_id, :genre_id, :game_name, :rating, :release_date, :price, :description
   #
   # or
   #
@@ -14,5 +14,12 @@ ActiveAdmin.register Game do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  
+  # form do |f|
+  #   f.semantic_errors
+  #   f.inputs
+  #   f.inputs do
+  #     f.input :image, as: :file, hint: f.object.image.present? ? image_tag(f.object.image) : ""
+  #   end
+  #   f.actions
+  # end
 end
