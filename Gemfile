@@ -79,3 +79,9 @@ gem "activeadmin", "~> 3.1"
 gem "devise", "~> 4.9"
 
 gem "faker", "~> 3.2"
+
+# Hide API keys
+gem "dotenv-rails", "~> 2.7"
+
+# Accessing external APIs
+gem "rest-client", "~> 2.1"
