@@ -1,4 +1,11 @@
 <h1><%= @game.game_name %></h1>
+<% if @game.image.present? %>
+  <div>
+    <figure>
+      <%= image_tag @game.image %>
+    </figure>
+  </div>
+<% end %>
 <p><%= @game.rating%></p>
 <p><%= @game.release_date%></p>
 <p><%= @genre.genre_name%></p>

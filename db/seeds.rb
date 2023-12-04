@@ -22,6 +22,10 @@ def fetch_data
     # Fetches the data from the API.
     fetch = RestClient.get("https://store.steampowered.com/api/appdetails?appids=#{appid}")
     data = JSON.parse(fetch)
+    sleep(2)
+
+    # Check if data returned successfully if not, skip
+    next if data.dig(appid, "success") == false
 
     # Gets the price of the game. If the price is nil, it will be set to zero.
     price = data.dig(appid, "data", "price_overview", "final").to_i
@@ -34,6 +38,8 @@ def fetch_data
 
     game_name = data&.dig(appid, "data", "name")
     puts "Game Name: #{game_name || 'N/A'}"
+
+    puts "Backgroud URL: #{data.dig(appid, "data", "background")}"
 
     required_age = data&.dig(appid, "data", "required_age")
     puts "Required Age: #{required_age || 'N/A'}"
@@ -72,7 +78,9 @@ def fetch_data
     # Seeds the database.
     platform_id = Platform.find_or_create_by(platform_name: platform_names).id
     genre_id = Genre.find_or_create_by(genre_name: genre_names).id
-    Game.create(game_name:, rating:, description:, price:, platform_id:, genre_id:, release_date:, )
+    background_image_download = URI.open(data.dig(appid, "data", "background"))
+    game = Game.create(game_name:, rating:, description:, price:, platform_id:, genre_id:, release_date:, )
+    game.image.attach(io: background_image_download, filename: "m-#{game.game_name}-background.jpg")
 
     # Exits the loop if the number of fetched games is equal to the NUMBER_OF_GAMES
     fetched_games += 1

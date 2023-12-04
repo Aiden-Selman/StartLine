@@ -14,12 +14,12 @@ ActiveAdmin.register Game do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  # form do |f|
-  #   f.semantic_errors
-  #   f.inputs
-  #   f.inputs do
-  #     f.input :image, as: :file, hint: f.object.image.present? ? image_tag(f.object.image) : ""
-  #   end
-  #   f.actions
-  # end
+  form do |f|
+    f.semantic_errors
+    f.inputs
+    f.inputs do
+      f.input :image, as: :file, hint: f.object.image.present? ? image_tag(f.object.image) : ""
+    end
+    f.actions
+  end
 end
