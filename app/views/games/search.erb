@@ -1,0 +1,26 @@
+<h3>Search Results of games:</h3>
+  <% if !@matchGames.blank? %>
+    <% @matchGames.each do |game| %>
+      <%= link_to game.game_name, game_path(game.id) %>
+    <% end %>
+  <% else %>
+    <p>No results!</p>
+  <% end %>
+  <hr>
+<h3>Search Results of genres:</h3>
+  <% if !@matchGenres.blank? %>
+    <% @matchGenres.each do |genre| %>
+      <%= link_to genre.genre_name, genre_path(genre.id) %>
+    <% end %>
+  <% else %>
+    <p>No results!</p>
+  <% end %>
+  <hr>
+<h3>Search Results of platforms:</h3>
+  <% if !@matchPlatforms.blank? %>
+    <% @matchPlatforms.each do |platform| %>
+      <%= link_to platform.platform_name, platform_path(platform.id) %>
+    <% end %>
+  <% else %>
+    <p>No results!</p>
+  <% end %>
