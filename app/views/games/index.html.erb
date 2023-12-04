@@ -1,8 +1,25 @@
 <h1>Games</h1>
-<ul>
-  <% @games.each do |game| %>
-    <li>
-      <%= link_to game.game_name, game %>
-    </li>
-  <% end %>
-</ul>
+
+<div class="container text-center">
+  <div class="row align-items-start">
+    <% @games.each do |game| %>
+    <div class="col-sm-4 border border-primary-subtle">
+      <%= link_to gane.game_name, game %>
+    </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col">
+      &nbsp;
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+    </div>
+    <div class="col pagination justify-content-center">
+      <%= paginate @games %>
+    </div>
+    <div class="col">
+    </div>
+  </div>
+</div>

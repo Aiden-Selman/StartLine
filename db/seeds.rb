@@ -22,7 +22,7 @@ def fetch_data
     # Fetches the data from the API.
     fetch = RestClient.get("https://store.steampowered.com/api/appdetails?appids=#{appid}")
     data = JSON.parse(fetch)
-    sleep(2)
+    sleep(1)
 
     # Check if data returned successfully if not, skip
     next if data.dig(appid, "success") == false
