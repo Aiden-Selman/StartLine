@@ -313,7 +313,7 @@ DEPENDENCIES
   devise (~> 4.9)
   dotenv-rails (~> 2.7)
   faker (~> 3.2)
-  image_processing (>= 1.2)
+  image_processing
   importmap-rails
   jbuilder
   kaminari

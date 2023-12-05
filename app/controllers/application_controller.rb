@@ -3,10 +3,10 @@ class ApplicationController < ActionController::Base
   helper_method :cart
 
   def initialize_session
-    session[:session_cart] ||= []
+    session[:shopping_cart] ||= []
   end
 
   def cart
-    Game.find(session[:session_cart])
+    Game.find(session[:shopping_cart])
   end
 end
