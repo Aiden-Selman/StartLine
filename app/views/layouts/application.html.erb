@@ -14,22 +14,6 @@
     <header>
       <h1>Buy Our Stuff</h1>
       <h3>Make Us Rich</h3>
-      <nav>
-        <ul>
-         <% if cart.present? %>
-            <li>
-              <sup><%= cart.size %></sup>
-              <ul>
-                <% cart.each do |game| %>
-                  <li>
-                    <%= game.game_name %> <%= button_to '➖', cart_path(game), method: :delete %>
-                  </li>
-                <% end %>
-              </ul>
-            </li>
-          <% end %>
-        </ul>
-      </nav>
     </header>
     <main>
         <% if flash[:notice] %>
@@ -50,7 +34,7 @@
           <ul>
             <% cart.each do |game| %>
               <li>
-                <%= game.game_name %> <%= button_to '❌', cart_path(game.id), method: :delete, form_class: "btnRemove" %>
+                <%= game.game_name %> <%= button_to '❌', cart_path(game.id), method: :delete, form_class: "btnRemove" %> <input type="number" id="quantity" name="quantity" min="1" value="1"/>
               </li>
             <% end %>
           </ul>
