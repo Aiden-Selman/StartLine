@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   # Games Routes
   resources :games
 
+  # Cart Routes
+  resources :cart, only: %i[create destroy]
+
   # Genres Routes
   resources :genres
 
