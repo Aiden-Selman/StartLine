@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :platforms
 
   # About Route
-  get "about/", to: "about#index", as: "about"
+  get "about", to: "about#index", as: "about"
 
   # Contact Route
   get "contact/", to: "contact#index", as: "contact"

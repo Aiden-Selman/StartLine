@@ -1,5 +1,5 @@
 class AboutController < ApplicationController
   def index
-    @about = About.find(1)
+    @abouts = About.all
   end
 end
