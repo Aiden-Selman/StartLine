@@ -25,3 +25,16 @@
     <% end %>
   </div>
 </nav>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <% breadcrumbs.each do |crumb| %>
+        <li class="breadcrumb-item">
+          <% if crumb.link? %>
+            <%= link_to crumb.name, crumb.path %>
+          <% else %>
+            <%= crumb.name %>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+</nav>

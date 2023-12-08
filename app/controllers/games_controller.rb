@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  before_action :set_breadcrumbs
+
   def index
     @games = Game.order(:game_name).page params[:page]
   end
@@ -7,6 +9,8 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @genre = Genre.find(@game.genre_id)
     @platform = Platform.find(@game.platform_id)
+
+    add_breadcrumb(@game.game_name, game_path(@game))
   end
 
   def search
@@ -18,5 +22,9 @@ class GamesController < ApplicationController
       @matchGenres = Genre.where("lower(genre_name) Like ?", "%#{@parameter}%").page(params[:page]).per(10)
       @matchPlatforms = Platform.where("lower(platform_name) LIKE ?", "%#{@parameter}%").page(params[:page]).per(10)
     end
+  end
+
+  def set_breadcrumbs
+    add_breadcrumb("Games", games_path)
   end
 end
