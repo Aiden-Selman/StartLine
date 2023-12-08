@@ -25,6 +25,7 @@ class GamesController < ApplicationController
   end
 
   def set_breadcrumbs
+    add_breadcrumb("Home", root_path)
     add_breadcrumb("Games", games_path)
   end
 end

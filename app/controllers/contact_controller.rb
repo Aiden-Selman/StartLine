@@ -6,6 +6,7 @@ class ContactController < ApplicationController
   end
 
   def set_breadcrumbs
+    add_breadcrumb("Home", root_path)
     add_breadcrumb("Contact", contact_path)
   end
 end

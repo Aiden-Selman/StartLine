@@ -17,6 +17,7 @@ class GenresController < ApplicationController
   end
 
   def set_breadcrumbs
+    add_breadcrumb("Home", root_path)
     add_breadcrumb("Genres", genres_path)
   end
 end

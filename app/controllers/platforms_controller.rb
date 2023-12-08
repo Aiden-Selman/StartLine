@@ -16,6 +16,7 @@ class PlatformsController < ApplicationController
   end
 
   def set_breadcrumbs
+    add_breadcrumb("Home", root_path)
     add_breadcrumb("Platform", platforms_path)
   end
 end

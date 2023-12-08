@@ -25,10 +25,10 @@
     <% end %>
   </div>
 </nav>
-<nav class="container" aria-label="breadcrumb">
-    <ol class="breadcrumb">
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb d-block">
       <% breadcrumbs.each do |crumb| %>
-        <li class="breadcrumb-item">
+        <li class="breadcrumb-item d-inline-block<%= ' active' if crumb == breadcrumbs.last %>">
           <% if crumb.link? %>
             <%= link_to crumb.name, crumb.path %>
           <% else %>
