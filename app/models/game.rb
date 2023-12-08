@@ -1,5 +1,5 @@
 class Game < ApplicationRecord
   has_one_attached :image
 
-  paginates_per 10
+  paginates_per 12
 end
