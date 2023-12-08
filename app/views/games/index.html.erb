@@ -1,9 +1,9 @@
-<h1>Games</h1>
+<h3>Games</h3>
 
 <div class="container text-center">
   <div class="row align-items-start">
     <% @games.each do |game| %>
-    <div class="col-sm-4 border border-primary-subtle">
+    <div class="col-sm-4 border">
       <%= link_to game.game_name, game %>
     </div>
     <% end %>

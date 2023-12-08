@@ -15,7 +15,7 @@ class GamesController < ApplicationController
 
   def search
     if params[:search].blank?
-      redrect_to games_path and return
+      redirect_to games_path and return
     else
       @parameter = params[:search].downcase
       @matchGames = Game.where("lower(game_name) LIKE ?", "%#{@parameter}%").page(params[:page]).per(12)
