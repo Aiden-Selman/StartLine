@@ -18,9 +18,9 @@ class GamesController < ApplicationController
       redrect_to games_path and return
     else
       @parameter = params[:search].downcase
-      @matchGames = Game.where("lower(game_name) LIKE ?", "%#{@parameter}%").page(params[:page]).per(10)
-      @matchGenres = Genre.where("lower(genre_name) Like ?", "%#{@parameter}%").page(params[:page]).per(10)
-      @matchPlatforms = Platform.where("lower(platform_name) LIKE ?", "%#{@parameter}%").page(params[:page]).per(10)
+      @matchGames = Game.where("lower(game_name) LIKE ?", "%#{@parameter}%").page(params[:page]).per(12)
+      @matchGenres = Genre.where("lower(genre_name) Like ?", "%#{@parameter}%").page(params[:page]).per(12)
+      @matchPlatforms = Platform.where("lower(platform_name) LIKE ?", "%#{@parameter}%").page(params[:page]).per(12)
     end
   end
 
