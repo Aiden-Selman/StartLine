@@ -1,5 +1,5 @@
 class AboutController < ApplicationController
   def index
-    @about = About.find(1)
+    @about = About.take
   end
 end
