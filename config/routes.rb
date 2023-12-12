@@ -15,10 +15,12 @@ Rails.application.routes.draw do
   resources :platforms
 
   # About Route
-  get "about/", to: "about#index", as: "about"
+  # get "about/", to: "about#index", as: "about"
+  resources :about
 
   # Contact Route
-  get "contact/", to: "contact#index", as: "contact"
+  # get "contact/", to: "contact#index", as: "contact"
+  resources :contact
 
   # Search Route
   get "search/", to: "games#search", as: "search"

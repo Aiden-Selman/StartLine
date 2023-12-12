@@ -42,6 +42,9 @@
           <p>No items in your cart.</p>
         <% end %>
       </details>
+      <% if cart.present? %>
+        <p><%= link_to "Checkout", 'checkout/' %></p>
+      <% end %>
       <hr>
     </footer>
     <%= render partial: 'common/menu' %>
