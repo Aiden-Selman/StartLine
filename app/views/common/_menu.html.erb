@@ -1,22 +1,33 @@
-<div class="container text-center">
-  <div class="row">
-    <div class="col">
-      <%= link_to "Home", root_path %>
-    </div>
-    <div class="col">
-      <%= link_to "Games", games_path %>
-    </div>
-    <div class="col">
-      <%= link_to "Genres", genres_path %>
-    </div>
-    <div class="col">
-      <%= link_to "Platforms", platforms_path %>
-    </div>
-    <div class="col">
-      <%= link_to "About", 'about/index' %>
-    </div>
-    <div class="col">
-      <%= link_to "Contact Us", 'contact/index' %>
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+  <%= link_to "StartLine", root_path, class: 'navbar-brand' %>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="navbar-nav">
+      <%= link_to "Home", root_path, class: 'nav-item nav-link' %>
+      <%= link_to "Games", games_path, class: 'nav-item nav-link' %>
+      <%= link_to "Genres", genres_path, class: 'nav-item nav-link' %>
+      <%= link_to "Platforms", platforms_path, class: 'nav-item nav-link' %>
+      <%= link_to "About", about_path, class: 'nav-item nav-link' %>
+      <%= link_to "Contact Us", contact_path, class: 'nav-item nav-link' %>
     </div>
   </div>
-</div>
+</nav>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb d-block">
+      <% breadcrumbs.each do |crumb| %>
+        <li class="breadcrumb-item d-inline-block<%= ' active' if crumb == breadcrumbs.last %>">
+          <% if crumb.link? %>
+            <%= link_to crumb.name, crumb.path %>
+          <% else %>
+            <%= crumb.name %>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+</nav>
+<%= form_tag(search_path, :method => "get") do %>
+  <%= search_field_tag :search, params[:search], placeholder: "Search", class: 'form-control' %>
+  <%= button_tag "Search games", class: '' %>
+<% end %>

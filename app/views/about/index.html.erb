@@ -1,2 +1,25 @@
-<h1>About</h1>
-<p><%= @about.content %></p>
+<h3>About Page</h3>
+
+<h4>StartLine</h4>
+
+<p>
+  <% @abouts.each do |about| %>
+    <li>
+    <%= about.content %>
+    </li>
+  <% end %>
+</p>
+
+<%# <p>
+Hello, Start Line, my name is Aiden Selman and I’m writing to you today to put a bid in for your Ecommerce website. Your business is quite large with 11,000 full time employees and 14,000 to 27,000 part time employees and has been expanding since 1984. It’s about time to switch to the ever-expanding online marketplace with your video game and collectable products. With your current approach of storefront only, you are missing out on millions in profits from an online marketplace untapped by you. I believe your intended customers are gamers of all ages but more specifically kids and teenagers, the design of the website will reflect this. It will be easy for customers to find games by searching and sorting by platform that the game will be on as well as be able to search for keywords from the name of the game.
+</p>
+
+<h3>This site</h3>
+<p>
+For the backend of this website there will be a table for the games, and it will have data for the name of the game, its rating, its release date, and if its an online only game or not. This is the main table for the site and is the most important as it holds all the data about the games you are going to sell. Another table we will need is the platforms table to better filter games for the customers. This is also important because there are some games that are exclusive for that platform. The last table we will need will be the genres table as every game is different, but games fall into different genres which can help further sort games for customers. There are many genres of games which can be helpful if people don’t know the name of the game, they are looking for but know other attributes of it. Here is the current ERD to better represent what I am talking about. This is subject to change during development so this may not be how it looks by the end of development.
+</p>
+
+<h3>Data Sources</h3>
+<p>
+The data sources of the site includes a json file from Steam Games List API and the game details are from Steam Store API.
+</p> %>

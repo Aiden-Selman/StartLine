@@ -1,2 +1,9 @@
-<h1>Contact</h1>
-<p><%= @contact.content %></p>
+<h3>Contact</h3>
+
+<p>
+  <% @contacts.each do |contact| %>
+    <li>
+    <%= contact.content %>
+    </li>
+  <% end %>
+</p>
