@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :initialize_session
   helper_method :cart
+  helper_method :breadcrumbs
 
   def initialize_session
     session[:shopping_cart] ||= []
@@ -8,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   def cart
     Game.find(session[:shopping_cart])
-  helper_method :breadcrumbs
+  end
 
   def breadcrumbs
     @breadcrumbs ||= []

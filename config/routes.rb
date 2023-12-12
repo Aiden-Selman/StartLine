@@ -18,8 +18,8 @@ Rails.application.routes.draw do
   get "about", to: "about#index", as: "about"
 
   # Contact Route
-  # get "contact/", to: "contact#index", as: "contact"
-  resources :contact
+  get "contact", to: "contact#index", as: "contact"
+  # resources :contact
 
   # Search Route
   get "search/", to: "games#search", as: "search"
