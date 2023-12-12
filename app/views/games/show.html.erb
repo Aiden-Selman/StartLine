@@ -9,7 +9,7 @@
 <% end %>
 <p><%= @game.rating%></p>
 <p><%= @game.release_date%></p>
-<p><%= @genre.genre_name%></p>
-<p><%= @platform.platform_name%></p>
+<p><%= link_to @genre.genre_name, @genre%></p>
+<p><%= link_to @platform.platform_name, @platform%></p>
 <p><%= @game.description%></p>
 <p><%= @game.price%></p>
