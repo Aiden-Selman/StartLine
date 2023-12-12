@@ -1,6 +1,15 @@
 class CheckoutController < ApplicationController
   # establish a connection with Stripe and then redirect
   # the user to the payment screen
+
+  def index
+    @cart = session[:shopping_cart]
+    @games = []
+    @cart.each do |game|
+      @games << Game.find(game)
+    end
+  end
+
   def create
     # load up the product the user wishes to purhases from the product model:
     @product = Product.find(params[:product_id])

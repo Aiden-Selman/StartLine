@@ -1,0 +1,10 @@
+<h1>Cart</h1>
+<div class="container text-center">
+  <div class="row align-items-start">
+    <% @games.each do |game| %>
+    <div class="col-sm-4 border border-primary-subtle">
+      <%= link_to game.game_name, game %>
+    </div>
+    <% end %>
+  </div>
+</div>
