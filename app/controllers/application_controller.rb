@@ -18,4 +18,7 @@ class ApplicationController < ActionController::Base
   def add_breadcrumb(name, path = nil)
     breadcrumbs << Breadcrumb.new(name, path)
   end
+
+  # Add custom flash types
+  # add_flash_types :warning, :info
 end
