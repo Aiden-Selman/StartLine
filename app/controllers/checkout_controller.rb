@@ -1,12 +1,13 @@
 class CheckoutController < ApplicationController
-  # establish a connection with Stripe and then redirect
-  # the user to the payment screen
-
   def index
     @cart = session[:shopping_cart]
     @games = []
     @cart.each do |game|
       @games << Game.find(game)
+    end
+    @total_cost = 0
+    @games.each do |game|
+      @total_cost += game.price / 100
     end
   end
 

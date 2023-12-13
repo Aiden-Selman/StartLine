@@ -4,7 +4,37 @@
     <% @games.each do |game| %>
     <div class="col-sm-4 border border-primary-subtle">
       <%= link_to game.game_name, game %>
+      <p>$<%= game.price / 100 %></p>
     </div>
     <% end %>
+    <label for="provinces">Choose a province:</label>
+      <select onChange="calculateTotal()" name="provinces" id="provinces">
+        <option value="1.05">Alberta</option>
+        <option value="1.12">British Columbia</option>
+        <option value="1.12">Manitoba</option>
+        <option value="1.15">New Brunswick</option>
+        <option value="1.15">Newfoundland & Labrador</option>
+        <option value="1.05">Northwest Territories</option>
+        <option value="1.15">Nova Scoita</option>
+        <option value="1.05">Nunavut</option>
+        <option value="1.13">Ontario</option>
+        <option value="1.15">Price Edward Island</option>
+        <option value="1.14975">Quebec</option>
+        <option value="1.11">Saskatchewan</option>
+        <option value="1.05">Yukon</option>
+      </select>
+    <script type="text/javascript">
+        function calculateTotal() {
+            selectElement =
+                  document.getElementById('provinces');
+            output = selectElement.value;
+            totalPlusTax = <%= @total_cost %> * output;
+            document.querySelector('.total').textContent = Math.round((totalPlusTax + Number.EPSILON) * 100) / 100;
+        }
+    </script>
+    <p id="total">Total:
+      <span class="total"></span>
+    </p>
+    <button>Proceed to checkout</button>
   </div>
 </div>
