@@ -1,13 +1,17 @@
-<div class="text-center">
-<h3><%= @game.game_name %></h3>
-<%= render @game %>
-</div>
 <% if @game.image.present? %>
-<div class="d-flex justify-content-center align-items-start bg-image" style="background-image: url(<%= rails_blob_url(@game.image) %>); height: 100vh; background-repeat: no-repeat;">
-  <table class="w-50 table-bordered table-striped bg-success p-2 text-white bg-opacity-10">
+<div class="p-3 d-flex flex-column justify-content-start align-items-center bg-image" style="background-image: url(<%= rails_blob_url(@game.image) %>); height: 100vh; background-repeat: no-repeat;">
+  <h3 class="text-white"><%= @game.game_name %></h3>
 <% else %>
-<div class="d-flex justify-content-center align-items-start">
-  <table class="w-50 table">
+<div class="p-3 d-flex flex-column justify-content-start align-items-center">
+  <h3><%= @game.game_name %></h3>
+<% end %>
+  <div class="pb-1">
+  <%= render @game %>
+  </div>
+<% if @game.image.present? %>
+  <table class="w-50 table-bordered table-striped bg-success p-2 bg-opacity-10 text-white">
+<% else %>
+  <table class="w-50 table-bordered table-striped bg-success p-2 bg-opacity-10">
 <% end %>
     <tbody>
       <tr>
@@ -32,7 +36,7 @@
       </tr>
       <tr>
         <th scope="row">Price: </th>
-        <td><%= @game.price%></td>
+        <td>$<%= @game.price%></td>
       </tr>
     </tbody>
   </table>
