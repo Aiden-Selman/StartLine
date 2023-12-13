@@ -5,23 +5,9 @@
     <% @games.each do |game| %>
       <div class="col-sm-4 border">
         <%= link_to game.game_name, game %>
-        <% if cart.include?(game) %>
-          <%= button_to cart_path(game), method: :delete do %>
-            ❌ Remove From Cart
-          <% end %>
-        <% else %>
-          <%= form_with  url: cart_index_path, method: :post do %>
-            <%= hidden_field_tag(:id, game.id) %>
-            <%= button_tag 'Add to Cart' %>
-          <% end %>
-        <% end %>
+        <%= render game %>
       </div>
     <% end %>
-  </div>
-  <div class="row">
-    <div class="col">
-      &nbsp;
-    </div>
   </div>
   <div class="row">
     <div class="col">
