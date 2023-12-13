@@ -1,0 +1,15 @@
+<h3>Send SMS</h3>
+
+<%= form_tag(messages_send_sms_path, method: :post) do %>
+  <div>
+    <%= label_tag 'Phone Number' %>
+    <%= text_field_tag 'phone_number', nil, required: true %>
+  </div>
+
+  <div>
+    <%= label_tag 'Message' %>
+    <%= text_area_tag 'message', nil, required: true %>
+  </div>
+
+  <%= submit_tag 'Send SMS' %>
+<% end %>
