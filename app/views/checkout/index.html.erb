@@ -5,6 +5,7 @@
     <div class="col-sm-4 border border-primary-subtle">
       <%= link_to game.game_name, game %>
       <p>$<%= game.price / 100 %></p>
+      <input onChange="calculateTotal()" type="number" id="quantity" name="quantity" min="1" value="1"/>
     </div>
     <% end %>
     <label for="provinces">Choose a province:</label>
@@ -25,10 +26,11 @@
       </select>
     <script type="text/javascript">
         function calculateTotal() {
-            selectElement =
-                  document.getElementById('provinces');
-            output = selectElement.value;
-            totalPlusTax = <%= @total_cost %> * output;
+            provinceTax = document.getElementById('provinces');
+            numberOfGames = document.getElementById('quantity');
+            tax = provinceTax.value;
+            quantity = numberOfGames.value;
+            totalPlusTax = (<%= @total_cost %> * quantity) * tax;
             document.querySelector('.total').textContent = Math.round((totalPlusTax + Number.EPSILON) * 100) / 100;
         }
     </script>
