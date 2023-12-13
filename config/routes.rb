@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # Defines the root path route ("/")
-  root "games#index"
+  root "home#index"
 
   # Games Routes
   resources :games
