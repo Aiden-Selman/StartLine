@@ -10,20 +10,10 @@
     <% end %>
     <label for="provinces">Choose a province:</label>
       <select onChange="calculateTotal()" name="provinces" id="provinces">
-        <option value="1.05">Alberta</option>
-        <option value="1.12">British Columbia</option>
-        <option value="1.12">Manitoba</option>
-        <option value="1.15">New Brunswick</option>
-        <option value="1.15">Newfoundland & Labrador</option>
-        <option value="1.05">Northwest Territories</option>
-        <option value="1.15">Nova Scoita</option>
-        <option value="1.05">Nunavut</option>
-        <option value="1.13">Ontario</option>
-        <option value="1.15">Price Edward Island</option>
-        <option value="1.14975">Quebec</option>
-        <option value="1.11">Saskatchewan</option>
-        <option value="1.05">Yukon</option>
-      </select>
+        <% @provinces.each do |province| %>
+          <option value=<%= province.gst + province.pst + province.hst + 1 %>><%= province.province_name %></option>
+        <% end %>
+    </select>
     <script type="text/javascript">
         function calculateTotal() {
             provinceTax = document.getElementById('provinces');

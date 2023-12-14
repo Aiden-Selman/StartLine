@@ -1,6 +1,7 @@
 class CheckoutController < ApplicationController
   def index
     @cart = session[:shopping_cart]
+    @provinces = Province.all()
     @games = []
     @cart.each do |game|
       @games << Game.find(game)
