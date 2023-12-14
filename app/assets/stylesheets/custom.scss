@@ -1,0 +1,26 @@
+@import "bootstrap";
+
+$font-stack: Helvetica, sans-serif;
+$primary-color: #ffffff;
+$secondary-color: #8a97a0;
+$background-color: #1b2838;
+$link-color: #67c1f5;
+
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+  background-color: $background-color;
+}
+
+nav {
+  background-color: $background-color;
+}
+
+nav a {
+  color: $link-color;
+}
+
+.breadcrumb >.active a {
+  color: $link-color;
+}
