@@ -1,15 +1,43 @@
-<h3><%= @game.game_name %></h3>
 <% if @game.image.present? %>
-  <div class="card-image">
-    <figure class="image">
-      <%# <%= image_tag @game.image.varient(resize_to_limit:[250,250]) %>
-      <%= image_tag @game.image %>
-    </figure>
-  </div>
+<div class="p-3 d-flex flex-column justify-content-start align-items-center bg-image" style="background-image: url(<%= rails_blob_url(@game.image) %>); height: 100vh; background-repeat: no-repeat;">
+  <h3 class="text-white"><%= @game.game_name %></h3>
+<% else %>
+<div class="p-3 d-flex flex-column justify-content-start align-items-center">
+  <h3><%= @game.game_name %></h3>
 <% end %>
-<p><%= @game.rating%></p>
-<p><%= @game.release_date%></p>
-<p><%= link_to @genre.genre_name, @genre%></p>
-<p><%= link_to @platform.platform_name, @platform%></p>
-<p><%= @game.description%></p>
-<p><%= @game.price%></p>
+  <div class="pb-1">
+  <%= render @game %>
+  </div>
+<% if @game.image.present? %>
+  <table class="w-50 table-bordered table-striped bg-success p-2 bg-opacity-10 text-white">
+<% else %>
+  <table class="w-50 table-bordered table-striped bg-success p-2 bg-opacity-10">
+<% end %>
+    <tbody>
+      <tr>
+        <th scope="row">Rating: </th>
+        <td><%= @game.rating%></td>
+      </tr>
+      <tr>
+        <th scope="row">Release Date: </th>
+        <td><%= @game.release_date%></td>
+      </tr>
+      <tr>
+        <th scope="row">Genre: </th>
+        <td><%= link_to @genre.genre_name, @genre%></td>
+      </tr>
+      <tr>
+        <th scope="row">Platform: </th>
+        <td><%= link_to @platform.platform_name, @platform%></td>
+      </tr>
+      <tr>
+        <th scope="row">Description: </th>
+        <td><%= @game.description%></td>
+      </tr>
+      <tr>
+        <th scope="row">Price: </th>
+        <td>$<%= @game.price%></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

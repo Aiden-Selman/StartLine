@@ -1,32 +1,32 @@
 <main>
-    <% if flash[:notice] %>
-      <p>
-        <%= flash[:notice] %>
-      </p>
-    <% end %>
-    </main>
-    <footer>
-      <details>
-        <summary>
-            Cart
-            <% if cart.present? %>
-              <sup><%= cart.size %></sup>
-            <% end %>
-        </summary>
+  <% if flash[:notice] %>
+    <p>
+      <%= flash[:notice] %>
+    </p>
+  <% end %>
+</main>
+<footer>
+  <details>
+    <summary>
+        Cart
         <% if cart.present? %>
-          <ul>
-            <% cart.each do |game| %>
-              <li>
-                <%= game.game_name %> <%= button_to '❌', cart_path(game.id), method: :delete, form_class: "btnRemove" %> <input type="number" id="quantity" name="quantity" min="1" value="1"/>
-              </li>
-            <% end %>
-          </ul>
-        <% else %>
-          <p>No items in your cart.</p>
+          <sup><%= cart.size %></sup>
         <% end %>
-      </details>
-      <% if cart.present? %>
-        <p><%= link_to "View Cart", 'checkout/' %></p>
-      <% end %>
-      <hr>
-    </footer>
+    </summary>
+    <% if cart.present? %>
+      <ul>
+        <% cart.each do |game| %>
+          <li>
+            <%= game.game_name %> <%= button_to '❌', cart_path(game.id), method: :delete, form_class: "btnRemove" %> <input type="number" id="quantity" name="quantity" min="1" value="1"/>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No items in your cart.</p>
+    <% end %>
+  </details>
+  <% if cart.present? %>
+    <p><%= link_to "View Cart", 'checkout/' %></p>
+  <% end %>
+  <hr>
+</footer>

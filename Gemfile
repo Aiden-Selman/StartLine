@@ -88,3 +88,9 @@ gem "dotenv-rails", "~> 2.7"
 
 # Accessing external APIs
 gem "rest-client", "~> 2.1"
+
+# Twilio
+gem "twilio-ruby", "~> 5.63.0"
+
+# Needed by Twilio
+gem "rack"
