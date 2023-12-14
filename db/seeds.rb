@@ -6,6 +6,7 @@ Platform.delete_all
 Genre.delete_all
 About.delete_all
 Contact.delete_all
+Province.delete_all
 
 NUMBER_OF_GAMES = 100
 GAMES_LIST = JSON.parse(File.read("db/steamgames.json"))
@@ -89,6 +90,19 @@ def fetch_data
   end
 end
 
+Province.create(province_name: "Alberta", pst: 1, gst: 1.05, hst: 1)
+Province.create(province_name: "British Columbia", pst: 1.07, gst: 1.05, hst: 1)
+Province.create(province_name: "Manitoba", pst: 1.07, gst: 1.05, hst: 1)
+Province.create(province_name: "New Brunswick", pst: 1, gst: 1, hst: 1.15)
+Province.create(province_name: "Newfoundland and Labrador", pst: 1, gst: 1, hst: 1.15)
+Province.create(province_name: "Northwest Territories", pst: 1, gst: 1.05, hst: 1)
+Province.create(province_name: "Nova Scotia", pst: 1, gst: 1, hst: 1.15)
+Province.create(province_name: "Nunavut", pst: 1, gst: 1.05, hst: 1)
+Province.create(province_name: "Ontario", pst: 1, gst: 1, hst: 1.13)
+Province.create(province_name: "Prince Edward Island", pst: 1, gst: 1, hst: 1.15)
+Province.create(province_name: "Quebec", pst: 1.09975, gst: 1.05, hst: 1)
+Province.create(province_name: "Saskatchewan", pst: 1.06, gst: 1.05, hst: 1)
+Province.create(province_name: "Yukon", pst: 1, gst: 1.05, hst: 1)
 AdminUser.create!(email: "admin@example.com", password: "password", password_confirmation: "password") if Rails.env.development?
 About.create(content: "Here is a little bit about us!")
 Contact.create(content: "Here is how you can reach us!")
