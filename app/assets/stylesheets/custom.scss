@@ -1,0 +1,28 @@
+$font-stack: Arial, sans-serif;
+$primary-color: #ffffff;
+$secondary-color: #8a97a0;
+$link-color: #67c1f5;
+$background-color: #1b2838;
+
+body {
+  font-family: $font-stack;
+  color: $primary-color;
+  background-color: $background-color;
+}
+
+nav {
+  background-color: $background-color;
+
+  a {
+    color: $link-color;
+  }
+}
+
+.breadcrumb li:after
+{
+	content: '/';
+	// display: inline;
+	font-size: 1.2em;
+	color: $primary-color;
+	padding: 0 0 0 1.2em;
+}
