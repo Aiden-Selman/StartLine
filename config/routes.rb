@@ -37,6 +37,12 @@ Rails.application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
+  # Twilio Routes
+  get 'messages/new'
+  post 'messages/send_sms'
+  # root 'messages#new'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
