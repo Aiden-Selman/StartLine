@@ -14,13 +14,8 @@ class CheckoutController < ApplicationController
 
   def create
     flash[:notice] = params
-    # Order.create()
-    # current_user.id
-    # session[:shopping_cart]
-    # params[:quantity]
-    # params[:selected_province_id]
-    # params[:finaltotal]
-
+    # Order.create(user_id: current_user.id, game_id: session[:shopping_cart][0], quantity: params[:quantity], province_id: params[:selected_province_id], total_price: params[:finaltotal])
+    # flash[:notice] = "Order created successfully!"
     redirect_to root_path
   end
 end
