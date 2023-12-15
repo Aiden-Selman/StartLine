@@ -1,8 +1,8 @@
 <h3>Checkout</h3>
-<div class="container text-center">
+<div class='container text-center'>
   <%= form_tag(checkout_create_path, method: :post, class: 'form-inline') do %>
     <% @games.each do |game| %>
-      <div id="a<%= game.id %>" class="row border border-primary-subtle mb-2 align-items-center">
+      <div id="a<%= game.id %>" class='row border border-primary-subtle mb-2 align-items-center'>
         <div class='col-md-3'>
           <div class='row align-items-center'>
             <div class='col-md-3'>
@@ -29,17 +29,16 @@
         <div class='col-md-3'>
           <div class='row form-group align-items-center'>
             <%= label_tag "game_total_#{game.id}", 'Subtotal:', class: 'col-md-3' %>
-            <%= text_field_tag "game_total_#{game.id}", '$0.00', id: "game_total_#{game.id}", readonly: true, class: 'col form-control-sm' %>
+            <%= text_field_tag "game_total_#{game.id}", '$0.00', id: "game_total_#{game.id}", readonly: true, class: 'col form-control-sm game-total' %>
           </div>
         </div>
       </div>
     <% end %>
 
-
     <div class='mb-2'>
       <div class='row form-group align-items-center'>
         <%= label_tag 'provinces', 'Select a province:', class: 'col-md-3' %>
-        <%= select_tag 'provinces', options_for_select(@provinces.map { |province| [province.province_name, province.gst + province.pst + province.hst + 1, {'data-id'=>province.id}] }, selected: @provinces.first.id), onchange: 'calculateTotal()', class: 'form-control', id: 'provinces', class: 'col form-control-sm' %>
+        <%= select_tag 'provinces', options_for_select(@provinces.map { |province| [province.province_name, province.gst + province.pst + province.hst + 1, {'data-id'=>province.id}] }, selected: @provinces.first.id), onchange: 'calculateTotal()', class: 'form-control col form-control-sm', id: 'provinces' %>
       </div>
     </div>
 
@@ -82,7 +81,7 @@
     });
 
     const provinceTotal = parseFloat(document.getElementById('provinces').value);
-    total *= provinceTotal;
+    total = total * provinceTotal;
 
     document.getElementById('finaltotal').value = `$${total.toFixed(2)}`;
     updateHiddenProvinceId();
