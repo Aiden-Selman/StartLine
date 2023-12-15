@@ -1,35 +1,80 @@
-<h1>Cart</h1>
+<h3>Checkout</h3>
 <div class="container text-center">
   <div class="row align-items-start">
-    <%= form_with url: checkout_create_path , method: :post do |form| %>
+    <%= form_tag(checkout_create_path, method: :post) do %>
       <% @games.each do |game| %>
-      <div class="col-sm-4 border border-primary-subtle">
-        <%= link_to game.game_name, game %>
-        <p>$<%= game.price / 100 %></p>
-        <input onChange="calculateTotal()" type="number" id="quantity" name="quantity" min="1" value="1"/>
-      </div>
+        <div id="a<%= game.id %>" class="col-sm-4 border border-primary-subtle">
+          <%= link_to game.game_name, game %>
+          <div class="form-group">
+            <%= label_tag 'game_price', 'Game Price' %>
+            <%= text_field_tag 'game_price', game.price * 0.01, id: game.id, readonly: true, class: 'form-control', data: { price: game.price * 0.01 } %>
+          </div>
+          <div class="form-group">
+            <%= label_tag 'quantity', 'Quantity' %>
+            <%= number_field_tag 'quantity', 1, min: 1, onchange: 'calculateGameTotal(this)', class: 'form-control', data: { game_id: game.id } %>
+          </div>
+          <div class="form-group">
+            <%= label_tag "game_total_#{game.id}", 'Subtotal' %>
+            <%= text_field_tag "game_total_#{game.id}", '$0.00', id: "game_total_#{game.id}", readonly: true, class: 'form-control game-total' %>
+          </div>
+        </div>
       <% end %>
-      <label for="provinces">Choose a province:</label>
-        <select onChange="calculateTotal()" name="province" id="province">
-          <% @provinces.each do |province| %>
-            <option value=<%= province.gst + province.pst + province.hst + 1 %>><%= province.province_name %></option>
-          <% end %>
-      </select>
-      <p name="total" id="total">Total: $
-        <span class="total"></span>
-      </p>
-      <%= form.submit "Proceed to checkout" %>
+
+      <div class="form-group">
+        <%= label_tag 'provinces', 'Select a province:' %>
+        <%= select_tag 'provinces', options_for_select(@provinces.map { |province| [province.province_name, province.id] }), onchange: 'calculateTotal()', class: 'form-control', id: 'provinces' %>
+      </div>
+
+      <%= hidden_field_tag 'selected_province_id', '', id: 'selected_province_id' %>
+
+      <div class="form-group">
+        <%= label_tag 'finaltotal', 'Total' %>
+        <%= text_field_tag 'finaltotal', '$0.00', id: 'finaltotal', readonly: true, class: 'form-control' %>
+      </div>
+
+      <%= submit_tag 'Proceed to checkout', class: 'btn btn-primary', onclick: 'prepareSubmission()' %>
     <% end %>
-    <script type="text/javascript">
-      function calculateTotal() {
-        provinceTax = document.getElementById('provinces');
-        numberOfGames = document.getElementById('quantity');
-        tax = provinceTax.value;
-        quantity = numberOfGames.value;
-        totalPlusTax = (<%= @total_cost %> * quantity) * tax;
-        document.querySelector('.total').textContent = Math.round((totalPlusTax + Number.EPSILON) * 100) / 100;
-      }
-      document.addEventListener('DOMContentLoaded', calculateTotal);
-    </script>
   </div>
 </div>
+
+<script type="text/javascript">
+  window.onload = function() {
+    const quantityInputs = document.querySelectorAll('[data-game-id]');
+    quantityInputs.forEach((input) => {
+      calculateGameTotal(input);
+    });
+    calculateTotal();
+  };
+
+  function calculateGameTotal(element) {
+    const gameId = element.dataset.gameId;
+    const gamePrice = parseFloat(document.getElementById(gameId).dataset.price);
+    const quantity = parseFloat(element.value);
+    const gameTotal = (gamePrice * quantity).toFixed(2);
+    document.getElementById(`game_total_${gameId}`).value = `$${gameTotal}`;
+    calculateTotal();
+  }
+
+  function calculateTotal() {
+    const gameTotals = document.querySelectorAll('.game-total');
+    let total = 0;
+    gameTotals.forEach((gameTotal) => {
+      total += parseFloat(gameTotal.value.replace('$', ''));
+    });
+
+    const provinceTotal = parseFloat(document.getElementById('provinces').value);
+    total += provinceTotal;
+
+    document.getElementById('finaltotal').value = `$${total.toFixed(2)}`;
+    updateHiddenProvinceId(); // Call this function to update the hidden field with the selected province ID
+  }
+
+  function updateHiddenProvinceId() {
+    const selectedProvinceId = document.getElementById('provinces').value;
+    document.getElementById('selected_province_id').value = selectedProvinceId;
+  }
+
+  function prepareSubmission() {
+    updateHiddenProvinceId(); // Ensure the hidden field is updated before submitting the form
+  }
+</script>
