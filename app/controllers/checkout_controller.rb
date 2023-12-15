@@ -14,6 +14,13 @@ class CheckoutController < ApplicationController
 
   def create
     flash[:notice] = params
+    # Order.create()
+    # current_user.id
+    # session[:shopping_cart]
+    # params[:quantity]
+    # params[:province]
+    # params[:total_price]
+
     redirect_to root_path
   end
 end
