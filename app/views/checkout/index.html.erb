@@ -22,7 +22,7 @@
 
       <div class="form-group">
         <%= label_tag 'provinces', 'Select a province:' %>
-        <%= select_tag 'provinces', options_for_select(@provinces.map { |province| [province.province_name, province.gst + province.pst + province.hst + 1] }), onchange: 'calculateTotal()', class: 'form-control', id: 'provinces' %>
+        <%= select_tag 'provinces', options_for_select(@provinces.map { |province| [province.province_name, province.gst + province.pst + province.hst + 1, {'data-id'=>province.id}] }), onchange: 'calculateTotal()', class: 'form-control', id: 'provinces' %>
       </div>
 
       <%= hidden_field_tag 'selected_province_id', '', id: 'selected_province_id' %>
@@ -66,13 +66,15 @@
     total *= provinceTotal;
 
     document.getElementById('finaltotal').value = `$${total.toFixed(2)}`;
-    updateHiddenProvinceId(); // Call this function to update the hidden field with the selected province ID
+    updateHiddenProvinceId();
   }
 
   function updateHiddenProvinceId() {
-    const selectedProvinceId = document.getElementById('provinces').id;
-    console.log(selectedProvinceId)
-    document.getElementById('selected_province_id').value = selectedProvinceId;
+  const selectedProvince = document.getElementById('provinces');
+  const selectedOption = selectedProvince.options[selectedProvince.selectedIndex];
+  const selectedProvinceId = selectedOption.getAttribute('data-id');
+
+  document.getElementById('selected_province_id').value = selectedProvinceId;
   }
 
   function prepareSubmission() {
