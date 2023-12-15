@@ -1,40 +1,59 @@
 <h3>Checkout</h3>
 <div class="container text-center">
-  <div class="row align-items-start">
-    <%= form_tag(checkout_create_path, method: :post) do %>
-      <% @games.each do |game| %>
-        <div id="a<%= game.id %>" class="col-sm-4 border border-primary-subtle">
-          <%= link_to game.game_name, game %>
-          <div class="form-group">
-            <%= label_tag 'game_price', 'Game Price' %>
-            <%= text_field_tag 'game_price', game.price * 0.01, id: game.id, readonly: true, class: 'form-control', data: { price: game.price * 0.01 } %>
-          </div>
-          <div class="form-group">
-            <%= label_tag 'quantity', 'Quantity' %>
-            <%= number_field_tag 'quantity', 1, min: 1, onchange: 'calculateGameTotal(this)', class: 'form-control', data: { game_id: game.id } %>
-          </div>
-          <div class="form-group">
-            <%= label_tag "game_total_#{game.id}", 'Subtotal' %>
-            <%= text_field_tag "game_total_#{game.id}", '$0.00', id: "game_total_#{game.id}", readonly: true, class: 'form-control game-total' %>
+  <%= form_tag(checkout_create_path, method: :post, class: 'form-inline') do %>
+    <% @games.each do |game| %>
+      <div id="a<%= game.id %>" class="row border border-primary-subtle mb-2 align-items-center">
+        <div class='col-md-3'>
+          <div class='row align-items-center'>
+            <div class='col-md-3'>
+              <%= label_tag 'game_name', 'Name:' %>
+            </div>
+            <div class='col d-flex justify-content-between'>
+              <%= link_to game.game_name, game %>
+            </div>
           </div>
         </div>
-      <% end %>
+        <div class='col-md-3'>
+          <div class='row form-group align-items-center'>
+            <%= label_tag 'game_price', 'Price:', class: 'col-md-3' %>
+            <%= text_field_tag 'game_price', game.price * 0.01, id: game.id, readonly: true, class: 'col form-control-sm', data: { price: game.price * 0.01 } %>
+          </div>
+        </div>
 
-      <div class="form-group">
-        <%= label_tag 'provinces', 'Select a province:' %>
-        <%= select_tag 'provinces', options_for_select(@provinces.map { |province| [province.province_name, province.gst + province.pst + province.hst + 1, {'data-id'=>province.id}] }), onchange: 'calculateTotal()', class: 'form-control', id: 'provinces' %>
+        <div class='col-md-3'>
+          <div class='row form-group align-items-center'>
+            <%= label_tag 'quantity', 'Quantity:', class: 'col-md-3' %>
+            <%= number_field_tag 'quantity', 1, min: 1, onchange: 'calculateGameTotal(this)', class: 'col form-control-sm', data: { game_id: game.id } %>
+          </div>
+        </div>
+        <div class='col-md-3'>
+          <div class='row form-group align-items-center'>
+            <%= label_tag "game_total_#{game.id}", 'Subtotal:', class: 'col-md-3' %>
+            <%= text_field_tag "game_total_#{game.id}", '$0.00', id: "game_total_#{game.id}", readonly: true, class: 'col form-control-sm' %>
+          </div>
+        </div>
       </div>
-
-      <%= hidden_field_tag 'selected_province_id', '', id: 'selected_province_id' %>
-
-      <div class="form-group">
-        <%= label_tag 'finaltotal', 'Total' %>
-        <%= text_field_tag 'finaltotal', '$0.00', id: 'finaltotal', readonly: true, class: 'form-control' %>
-      </div>
-
-      <%= submit_tag 'Proceed to checkout', class: 'btn btn-primary', onclick: 'prepareSubmission()' %>
     <% end %>
-  </div>
+
+
+    <div class='mb-2'>
+      <div class='row form-group align-items-center'>
+        <%= label_tag 'provinces', 'Select a province:', class: 'col-md-3' %>
+        <%= select_tag 'provinces', options_for_select(@provinces.map { |province| [province.province_name, province.gst + province.pst + province.hst + 1, {'data-id'=>province.id}] }, selected: @provinces.first.id), onchange: 'calculateTotal()', class: 'form-control', id: 'provinces', class: 'col form-control-sm' %>
+      </div>
+    </div>
+
+    <%= hidden_field_tag 'selected_province_id', '', id: 'selected_province_id' %>
+
+    <div class='mb-2'>
+      <div class='row form-group align-items-center'>
+        <%= label_tag 'finaltotal', 'Total', class: 'col-md-3' %>
+        <%= text_field_tag 'finaltotal', '$0.00', id: 'finaltotal', readonly: true, class: 'col form-control-sm' %>
+      </div>
+    </div>
+
+    <%= submit_tag 'Proceed to checkout', class: 'btn btn-primary', onclick: 'prepareSubmission()' %>
+  <% end %>
 </div>
 
 <script type="text/javascript">
@@ -70,11 +89,11 @@
   }
 
   function updateHiddenProvinceId() {
-  const selectedProvince = document.getElementById('provinces');
-  const selectedOption = selectedProvince.options[selectedProvince.selectedIndex];
-  const selectedProvinceId = selectedOption.getAttribute('data-id');
+    const selectedProvince = document.getElementById('provinces');
+    const selectedOption = selectedProvince.options[selectedProvince.selectedIndex];
+    const selectedProvinceId = selectedOption.getAttribute('data-id');
 
-  document.getElementById('selected_province_id').value = selectedProvinceId;
+    document.getElementById('selected_province_id').value = selectedProvinceId;
   }
 
   function prepareSubmission() {
