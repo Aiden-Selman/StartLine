@@ -18,8 +18,8 @@ class CheckoutController < ApplicationController
     # current_user.id
     # session[:shopping_cart]
     # params[:quantity]
-    # params[:province]
-    # params[:total_price]
+    # params[:selected_province_id]
+    # params[:finaltotal]
 
     redirect_to root_path
   end
