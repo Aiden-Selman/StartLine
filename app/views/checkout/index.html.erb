@@ -1,32 +1,35 @@
 <h1>Cart</h1>
 <div class="container text-center">
   <div class="row align-items-start">
-    <% @games.each do |game| %>
-    <div class="col-sm-4 border border-primary-subtle">
-      <%= link_to game.game_name, game %>
-      <p>$<%= game.price / 100 %></p>
-      <input onChange="calculateTotal()" type="number" id="quantity" name="quantity" min="1" value="1"/>
-    </div>
+    <%= form_with url: checkout_create_path , method: :post do |form| %>
+      <% @games.each do |game| %>
+      <div class="col-sm-4 border border-primary-subtle">
+        <%= link_to game.game_name, game %>
+        <p>$<%= game.price / 100 %></p>
+        <input onChange="calculateTotal()" type="number" id="quantity" name="quantity" min="1" value="1"/>
+      </div>
+      <% end %>
+      <label for="provinces">Choose a province:</label>
+        <select onChange="calculateTotal()" name="province" id="province">
+          <% @provinces.each do |province| %>
+            <option value=<%= province.gst + province.pst + province.hst + 1 %>><%= province.province_name %></option>
+          <% end %>
+      </select>
+      <p name="total" id="total">Total: $
+        <span class="total"></span>
+      </p>
+      <%= form.submit "Proceed to checkout" %>
     <% end %>
-    <label for="provinces">Choose a province:</label>
-      <select onChange="calculateTotal()" name="provinces" id="provinces">
-        <% @provinces.each do |province| %>
-          <option value=<%= province.gst + province.pst + province.hst + 1 %>><%= province.province_name %></option>
-        <% end %>
-    </select>
     <script type="text/javascript">
-        function calculateTotal() {
-            provinceTax = document.getElementById('provinces');
-            numberOfGames = document.getElementById('quantity');
-            tax = provinceTax.value;
-            quantity = numberOfGames.value;
-            totalPlusTax = (<%= @total_cost %> * quantity) * tax;
-            document.querySelector('.total').textContent = Math.round((totalPlusTax + Number.EPSILON) * 100) / 100;
-        }
+      function calculateTotal() {
+        provinceTax = document.getElementById('provinces');
+        numberOfGames = document.getElementById('quantity');
+        tax = provinceTax.value;
+        quantity = numberOfGames.value;
+        totalPlusTax = (<%= @total_cost %> * quantity) * tax;
+        document.querySelector('.total').textContent = Math.round((totalPlusTax + Number.EPSILON) * 100) / 100;
+      }
+      document.addEventListener('DOMContentLoaded', calculateTotal);
     </script>
-    <p id="total">Total: $
-      <span class="total"></span>
-    </p>
-    <button>Proceed to checkout</button>
   </div>
 </div>

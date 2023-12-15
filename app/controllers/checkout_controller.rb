@@ -13,6 +13,7 @@ class CheckoutController < ApplicationController
   end
 
   def create
-
+    flash[:notice] = params
+    redirect_to root_path
   end
 end
